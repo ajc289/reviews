@@ -104,22 +104,6 @@ TraverseDirectories('/home/ubuntu/content_farm/nltk_prac/data','')
 
 print('done')
 
-#print(len(PreProcessSearch('fuckery\n')))
-#print(len(PreProcessSearch('Clay\n')))
-#print(len(PreProcessSearch('leggings\n')))
-
-#hld = PreProcessSearch('Clay\n')
-#for h in hld:
-#   print (h.prod.page_title)
-
-#hld = PreProcessSearch('leggings\n')
-#for h in hld:
-#   print (h.prod.page_title)
-
-#hld = PreProcessSearch('Clay;leggings\n')
-#for h in hld:
-#   print (h.prod.page_title)
-
 ADDR = ("localhost", 9300)
 
 listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -135,8 +119,6 @@ while 1==1:
 
    search_ans = PreProcessSearch(res[0])
 
-   #for h in search_ans:
-      #print(h.prod.page_title)
    print(json.dumps(search_ans))
    sf.write(json.dumps(search_ans))
    sf.flush()

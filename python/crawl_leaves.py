@@ -65,13 +65,6 @@ def ProcessProductPage (f_xml_lock, f_xml, a_url, html):
 
    xml_result = ''
 
-   #xml_result += '<product>\n'
-   #xml_result += '<url>\n' + a_url + '\n</url>\n'
-   #xml_result += '<title>\n' + title + '\n</title>\n'
-   #xml_result += '<keywords>\n' + keywords + '\n</keywords>\n'
-   #xml_result += '<image>\n' + image_url + '\n</image>\n'
-   #xml_result += '<stars>\n' + stars + '\n</stars>\n'
-
    a_url = filter(lambda x: x in string.printable, a_url).encode("utf8")
    title = filter(lambda x: x in string.printable, keywords).encode("utf8")
    image_url = filter(lambda x: x in string.printable, image_url).encode("utf8")
@@ -89,10 +82,8 @@ def ProcessProductPage (f_xml_lock, f_xml, a_url, html):
    xml_result += '<product_code>\n' + product_code + '\n</product_code>\n'
 
    while counter < 15:
-   #while 1==1:
       new_url = 'http://www.amazon.com/' + product_name + '/product-reviews/' + product_code + '?pageNumber=' + str(counter)
       shld_continue = True
-      #print('fucking here ' + str(counter))
       try:
          html = urllib2.urlopen(new_url, timeout=10).read()
       except Exception as exc:
@@ -127,16 +118,6 @@ def ProcessProductPage (f_xml_lock, f_xml, a_url, html):
       if len(m) == 0:
          break
 
-      #regex = '<\/b>\s+<\/div>(.*?)<div style="padding-top: 10px; clear: both; width: 100%;">'
-      #m = re.findall(regex, new_html)
-       
-      #if len(m) == 0:
-      #    print('leaving')
-      #	  break
-       
-      #for i in range(0, len(m)):
-      #	  m[i] = SubRegex('<br \/><\/span>\s+<\/div>(.*)',SubRegex('<\/div>\s+<\/div>(.*)',SubRegex('<\/span>\s+<\/div>(.*)', SubRegex('<\/b>\s+<\/div>(.*)', m[i]))))
-
       for i in range(0,len(m)):
 	  if 'flashPlayer' in m[i]:
 	      m[i] = ''
@@ -169,7 +150,6 @@ def ProcessLeaf (soup):
 	 a_anchor = a_div.find('a')
 	 new_url = a_anchor['href']
 	 html = urllib2.urlopen(new_url).read()
-	 #ProcessProductPage (new_url,html)
       global pg_count
       pg_count += 1
       print(pg_count)
@@ -191,9 +171,6 @@ def ProcessLeaf (soup):
 
 def ProcessLeaf_iter (cur_path, soup):
    threads = []
-   #f_shit = open(cur_path + '/shit.html','w')
-   #f_shit.write(str(soup))
-   #f_shit.close()
 
    f_xml = open(cur_path + '/results.xml','w')
    f_xml.write('<?xml version="1.0"?>\n<category>\n')
@@ -222,7 +199,6 @@ def ProcessLeaf_iter (cur_path, soup):
          try:
             html = urllib2.urlopen(new_url, timeout=10).read()
          except Exception as exc:
-            #print ("here1")
             shld_continue = True
             print(type(exc))
             pass
@@ -296,8 +272,6 @@ def TraverseDirectories (path):
    print(path)
    global limit
    for poss_dir in os.listdir(path):
-      #if limit > 1420:
-         #break
       if os.path.isdir(path + '/' + poss_dir):
          TraverseDirectories (path + '/' + poss_dir)
       elif poss_dir == 'leaf_html.html':
@@ -306,18 +280,11 @@ def TraverseDirectories (path):
             if poss_dir == 'results.xml':
                saw_results = True
          if saw_results == False:
-            #if limit < 1415:
-             #  limit += 1
-              # continue
             f_leaf_html = open(path + '/leaf_html.html', 'r')
             html = f_leaf_html.read()
             f_leaf_html.close()
             soup = BeautifulSoup (html, 'html5lib')
-            #print('before')
             ProcessLeaf_iter(path, soup)
-            #print ('after')
-            #limit += 1
-         #print("LIMIT " + str(limit))
 
 base_path = '/home/ubuntu/content_farm/nltk_prac/data'
 

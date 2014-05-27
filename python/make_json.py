@@ -43,19 +43,12 @@ def Process(path):
                         feature_text.append(a_text.text.replace('\n',''))
                if len(feature_text) > 0:
                   features.append({'feature_name' : a_term_txt, 'feature_accordion_id' : a_term_txt.replace(' ', ''), 'feature_text' : feature_text, 'feature_curr_text' : feature_text[0], 'feature_curr_text_index': 0})
-               #features.append({'feature_name' : a_term_txt})
 
       individual_file['features'] = features
    
       f = open ('/home/ubuntu/content_farm/igniipotent/reviews/angular-reviews/app/json/' + product_code + '.json', 'w')
       f.write(json.dumps(individual_file))
       f.close()
-
-#TraverseDirectories (base_path, '')
-	    
-
-#Process2('data/Home__Kitchen/Kids_Home_Store/Utensils/processed_results.xml')
-
 
 def TraverseDirectories (base_path, new_path):
    for poss_dir in os.listdir(base_path + '/' + new_path):
@@ -67,7 +60,4 @@ def TraverseDirectories (base_path, new_path):
 
 TraverseDirectories('/home/ubuntu/content_farm/nltk_prac/data','')
 
-f = open ('/home/ubuntu/content_farm/igniipotent/reviews/angular-reviews/app/json/res.json', 'w')
-f.write(json.dumps(overview))
-f.close()
  
